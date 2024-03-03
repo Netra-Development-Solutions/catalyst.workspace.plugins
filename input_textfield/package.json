@@ -1,0 +1,33 @@
+{
+  "name": "input_textfield",
+  "version": "1.0.0",
+  "scripts": {
+    "build": "set NODE_ENV=production && rspack build",
+    "build:dev": "set NODE_ENV=development && rspack build",
+    "build:start": "cd dist && rspack serve",
+    "start": "set NODE_ENV=development && rspack serve",
+    "start:unix": "NODE_ENV=development rspack serve",
+    "build:unix": "NODE_ENV=production rspack build",
+    "build:dev:unix": "NODE_ENV=development rspack build"
+  },
+  "license": "MIT",
+  "author": {
+    "name": "Naman Khater",
+    "email": "naman22khater@gmail.com"
+  },
+  "devDependencies": {
+    "@rspack/cli": "0.5.4",
+    "@rspack/core": "0.5.4",
+    "@rspack/plugin-react-refresh": "0.5.4",
+    "@types/react": "^18.2.0",
+    "@types/react-dom": "^18.2.0",
+    "autoprefixer": "^10.1.0",
+    "postcss": "^8.2.1",
+    "postcss-loader": "^8.0.0",
+    "react-refresh": "^0.14.0"
+  },
+  "dependencies": {
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  }
+}
