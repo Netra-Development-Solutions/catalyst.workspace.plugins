@@ -43,7 +43,9 @@ module.exports = (_, argv) => ({
       name: "textfield",
       filename: "remoteEntry.js",
       remotes: {},
-      exposes: {},
+      exposes: {
+        "./TextField": "./src/TextField"
+      },
       shared: {
         ...deps,
         react: {
