@@ -20,7 +20,7 @@ module.exports = (_, argv) => ({
   },
 
   devServer: {
-    port: 4522,
+    port: 4600,
     historyApiFallback: true,
   },
 
@@ -46,9 +46,10 @@ module.exports = (_, argv) => ({
       },
     ],
   },
+
   plugins: [
     new ModuleFederationPlugin({
-      name: "textfield",
+      name: "ui_component_hub",
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
@@ -76,7 +77,7 @@ module.exports = (_, argv) => ({
           singleton: true,
           requiredVersion: deps["@emotion/styled"]
         }
-      }
+      },
     }),
     new HtmlWebPackPlugin({
       template: "./src/index.html",
