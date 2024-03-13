@@ -1,10 +1,18 @@
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 const Dotenv = require('dotenv-webpack');
-const deps = require("./package.json").dependencies;
+const packageJson = require("./package.json");
+const deps = packageJson.dependencies;
+const version = packageJson.version;
+
+const releasePathDev = "C:\\Users\\Naman Khater\\Desktop\\Netra-Development-Solutions\\catalyst.workspace.plugins\\";
+const releasePathProd = "C:\\Users\\Naman Khater\\Desktop\\Netra-Development-Solutions\\catalyst.workspace.plugins\\";
+
 module.exports = (_, argv) => ({
   output: {
-    publicPath: "http://localhost:4522/",
+    publicPath: `http://plugin.catalyst.com/${packageJson.name}/${version}/`,
+    path: require("path").resolve(argv.mode === 'production' ? releasePathProd : releasePathDev, `dist/${packageJson.name}/${version}`),
+    filename: "[name].js",
   },
 
   resolve: {
