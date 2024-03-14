@@ -53,7 +53,10 @@ module.exports = (_, argv) => ({
       filename: "remoteEntry.js",
       remotes: {},
       exposes: {
-        "./TextField": "./src/TextField"
+        "./TextField": "./src/TextField",
+        "./ThemeSelector": "./src/ThemeSelector",
+        "./ThemeContext": "./src/ThemeContext",
+        "./baseTheme": "./src/baseTheme"
       },
       shared: {
         ...deps,
