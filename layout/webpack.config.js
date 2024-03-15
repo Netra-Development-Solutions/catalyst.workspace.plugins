@@ -18,25 +18,12 @@ module.exports = (_, argv) => ({
     publicPath: "http://localhost:4600/",
   },
 
-  optimization: {
-    minimize: true,
-    minimizer: [
-      new TerserPlugin({
-        terserOptions: {
-          compress: {
-            drop_console: true, // Remove console.* statements
-          },
-        },
-      }),
-    ],
-  },
-
   resolve: {
     extensions: [".tsx", ".ts", ".jsx", ".js", ".json"],
   },
 
   devServer: {
-    port: 4600,
+    port: 4575,
     historyApiFallback: true,
   },
 
@@ -65,28 +52,13 @@ module.exports = (_, argv) => ({
 
   plugins: [
     new ModuleFederationPlugin({
-      name: "ui_component_hub",
+      name: "layout",
       filename: "remoteEntry.js",
-      remotes: {},
+      remotes: {
+        "ui_component_hub": "ui_component_hub@http://plugin.catalyst.com/ui_component_hub/1.0.0/remoteEntry.js",
+      },
       exposes: {
-        "./AppBar": "./src/AppBar",
-        "./Avatar": "./src/Avatar",
-        "./baseTheme": "./src/baseTheme",
-        "./Box": "./src/Box",
-        "./Button": "./src/Button",
-        "./Container": "./src/Container",
-        "./IconButton": "./src/IconButton",
-        "./icons/ExpandMore": "./src/icons/ExpandMoreIcon",
-        "./icons/LocalFireDepartmentSharp": "./src/icons/LocalFireDepartmentSharpIcon",
-        "./icons/Menu": "./src/icons/MenuIcon",
-        "./Menu": "./src/Menu",
-        "./MenuItem": "./src/MenuItem",
-        "./TextField": "./src/TextField",
-        "./ThemeContext": "./src/ThemeContext",
-        "./ThemeSelector": "./src/ThemeSelector",
-        "./Toolbar": "./src/Toolbar",
-        "./Tooltip": "./src/Tooltip",
-        "./Typography": "./src/Typography",
+        "./HeaderNavigation": "./src/HeaderNavigation",
       },
       shared: {
         ...deps,
@@ -98,18 +70,6 @@ module.exports = (_, argv) => ({
           singleton: true,
           requiredVersion: deps["react-dom"],
         },
-        "@mui/material": {
-          singleton: true,
-          requiredVersion: deps["@mui/material"]
-        },
-        "@emotion/react": {
-          singleton: true,
-          requiredVersion: deps["@emotion/react"]
-        },
-        "@emotion/styled": {
-          singleton: true,
-          requiredVersion: deps["@emotion/styled"]
-        }
       },
     }),
     new HtmlWebPackPlugin({

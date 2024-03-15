@@ -5,7 +5,7 @@ import "./index.css";
 import TextField from "./TextField";
 
 const App = () => (
-  <TextField label="Hello"/>
+  <TextField />
 );
 
 const root = ReactDOM.createRoot(document.getElementById("input-textfield"));
