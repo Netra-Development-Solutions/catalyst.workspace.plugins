@@ -14,37 +14,12 @@ import MenuIcon from 'ui_component_hub/icons/Menu';
 import LocalFireDepartmentSharpIcon from 'ui_component_hub/icons/LocalFireDepartmentSharp';
 import ExpandMoreIcon from 'ui_component_hub/icons/ExpandMore';
 
-const pages = [
-    {
-        "displayText": "Products",
-        "linkTo": "https://www.google.com/",
-        "key": "products"
-    }
-]
-
-const settings = [
-    {
-        "displayText": "Profile",
-        "linkTo": "https://www.google.com/",
-        "key": "profile"
-    },
-    {
-        "displayText": "Settings",
-        "linkTo": "https://www.google.com/",
-        "key": "settings"
-    },
-    {
-        "displayText": "Logout",
-        "linkTo": "https://www.google.com/",
-        "key": "logout"
-    }
-]
-
 function ResponsiveHeaderNavigation({navigationLinks, userProfileLinks, mainLogoLink}) {
-    const [visibleOptions, setVisibleOptions] = React.useState(navigationLinks || pages);
+    const [visibleOptions, setVisibleOptions] = React.useState(navigationLinks || []);
     const [hiddenOptions, setHiddenOptions] = React.useState([]);
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const [anchorElMore, setAnchorElMore] = React.useState(null);
     const [processing, setProcessing] = React.useState(true);
 
     const handleOpenNavMenu = (event) => {
@@ -62,34 +37,38 @@ function ResponsiveHeaderNavigation({navigationLinks, userProfileLinks, mainLogo
         setAnchorElUser(null);
     };
 
+    const handleOpenMoreMenu = (event) => {
+        setAnchorElMore(event.currentTarget);
+    }
+
+    const handleCloseMoreMenu = () => {
+        setAnchorElMore(null);
+    }
+
     React.useEffect(() => {
         // This effect is used to recalculate options on initial load
         const handleLoad = () => {
             const toolbarWidth = document.getElementById('toolbar').offsetWidth;
             const navbarTitleWidth = document.getElementById('navbar-title').offsetWidth;
-            // const navbarWidth = document.getElementById('navbar').offsetWidth;
             const navbarProfileWidth = document.getElementById('navbar-profile').offsetWidth;
             const navbarMoreButtonWidth = document.getElementById('navbar-more-button')?.offsetWidth || 0;
-            var totalWidth = (navigationLinks || pages).reduce((acc, option) => acc + getWidth(option.key), 0);
-            const remainingWidth = toolbarWidth - navbarTitleWidth - navbarMoreButtonWidth - navbarProfileWidth - 32;
+            var remainingWidth = toolbarWidth - navbarTitleWidth - navbarMoreButtonWidth - navbarProfileWidth - 32;
             
-            const newVisibleOptions = [...visibleOptions];
+            const newVisibleOptions = [];
             const newHiddenOptions = [];
-            
-            for (var i in visibleOptions) {
-                const option = visibleOptions[i];
-                if (i == visibleOptions.length - 1) break;
-                const optionWidth = getWidth(option);
-                if (totalWidth > remainingWidth) {
-                    totalWidth -= optionWidth;
-                    newVisibleOptions.pop();
-                    newHiddenOptions.unshift(option);
+            for (var i in navigationLinks) {
+                const option = navigationLinks[i];
+                const optionWidth = getWidth(option.key);
+                if (remainingWidth > optionWidth) {
+                    remainingWidth -= optionWidth;
+                    newVisibleOptions.push(option);
                 } else {
-                    break;
+                    remainingWidth = 0;
+                    newHiddenOptions.push(option);
                 }
             }
 
-            if (newVisibleOptions.length === visibleOptions.length) {
+            if (newVisibleOptions.length >= visibleOptions.length) {
                 setProcessing(false);
                 return;
             };
@@ -166,7 +145,7 @@ function ResponsiveHeaderNavigation({navigationLinks, userProfileLinks, mainLogo
                                 display: { xs: 'block', md: 'none' },
                             }}
                         >
-                            {(navigationLinks || pages).map((page) => (
+                            {(navigationLinks || []).map((page) => (
                                 <MenuItem key={page.key} onClick={handleCloseNavMenu}>
                                     <Typography textAlign="center">{page.displayText}</Typography>
                                 </MenuItem>
@@ -206,9 +185,9 @@ function ResponsiveHeaderNavigation({navigationLinks, userProfileLinks, mainLogo
                                 {page.displayText}
                             </Button>
                         ))}
-                        {hiddenOptions.length >= 1 &&
+                        {(hiddenOptions.length >= 1 || processing) &&
                             <Button
-                                onClick={handleCloseNavMenu}
+                                onClick={handleOpenMoreMenu}
                                 sx={{ my: 2, color: 'white' }}
                                 id={`navbar-more-button`}
                                 endIcon={<ExpandMoreIcon />}
@@ -219,11 +198,36 @@ function ResponsiveHeaderNavigation({navigationLinks, userProfileLinks, mainLogo
                             </Button>
                         }
                     </Box>
-
+                    {hiddenOptions.length >= 1 && 
+                        <Menu
+                            id="menu-appbar-more"
+                            anchorEl={anchorElMore}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'left',
+                            }}
+                            keepMounted
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'left',
+                            }}
+                            open={Boolean(anchorElMore)}
+                            onClose={handleCloseMoreMenu}
+                            sx={{
+                                display: { xs: 'none', md: 'flex' },
+                            }}
+                            >
+                            {(hiddenOptions || []).map((page) => (
+                                <MenuItem key={page.key} onClick={handleCloseMoreMenu}>
+                                    <Typography textAlign="center">{page.displayText}</Typography>
+                                </MenuItem>
+                            ))}
+                        </Menu>
+                    }
                     <Box sx={{ flexGrow: 0 }} id="navbar-profile">
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                                <Avatar alt="Remy Sharp" src="/static/images/avatar/2.jpg" />
+                                <Avatar alt="Naman Khater" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1-6V28kFPh67sxCosVVOqkOsqbLklVqJ6dg&s" />
                             </IconButton>
                         </Tooltip>
                         <Menu
@@ -242,7 +246,7 @@ function ResponsiveHeaderNavigation({navigationLinks, userProfileLinks, mainLogo
                             open={Boolean(anchorElUser)}
                             onClose={handleCloseUserMenu}
                         >
-                            {(userProfileLinks || settings).map((setting) => (
+                            {(userProfileLinks || []).map((setting) => (
                                 <MenuItem key={setting.key} onClick={handleCloseUserMenu}>
                                     <Typography textAlign="center">{setting.displayText}</Typography>
                                 </MenuItem>
