@@ -1,17 +1,17 @@
 {
-  "name": "ui_component_hub",
+  "name": "data_services",
   "version": "1.0.0",
   "scripts": {
     "build": "webpack --mode production",
     "build:dev": "webpack --mode development",
-    "build:start": "cd dist && PORT=4600 npx serve",
+    "build:start": "cd dist && PORT=4515 npx serve",
     "start": "webpack serve --open --mode development",
     "start:live": "webpack serve --open --mode development --live-reload --hot"
   },
   "license": "MIT",
   "author": {
-    "name": "Naman Khater",
-    "email": "naman22khater@gmail.com"
+    "name": "Jack Herrington",
+    "email": "jherr@pobox.com"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -26,18 +26,13 @@
     "postcss": "^8.2.1",
     "postcss-loader": "^4.1.0",
     "style-loader": "^3.3.0",
-    "terser-webpack-plugin": "^5.3.10",
     "webpack": "^5.57.1",
     "webpack-cli": "^4.10.0",
     "webpack-dev-server": "^4.3.1"
   },
   "dependencies": {
     "@babel/runtime": "^7.13.10",
-    "@emotion/react": "^11.11.4",
-    "@emotion/styled": "^11.11.0",
-    "@mui/icons-material": "^5.15.13",
-    "@mui/material": "^5.15.11",
-    "@mui/x-data-grid": "^7.0.0",
+    "axios": "^1.6.8",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   }

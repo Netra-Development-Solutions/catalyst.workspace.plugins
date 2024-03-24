@@ -1,5 +1,5 @@
 import React from "react";
-import TextField from '@mui/material/TextField';
+import Stack from '@mui/material/Stack';
 
 const generateId = (prefix) => {
     return `${prefix}-${Math.random().toString(36).substr(2, 9)}`;
@@ -7,8 +7,8 @@ const generateId = (prefix) => {
 
 const Plugin = (props) => {
     return (
-        <TextField 
-            id={generateId("TextField")}
+        <Stack 
+            id={generateId("Stack")}
             {...props}
         />
     );

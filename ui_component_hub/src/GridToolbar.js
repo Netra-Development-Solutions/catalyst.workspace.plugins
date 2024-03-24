@@ -1,5 +1,5 @@
 import React from "react";
-import TextField from '@mui/material/TextField';
+import { GridToolbar } from '@mui/x-data-grid';
 
 const generateId = (prefix) => {
     return `${prefix}-${Math.random().toString(36).substr(2, 9)}`;
@@ -7,8 +7,8 @@ const generateId = (prefix) => {
 
 const Plugin = (props) => {
     return (
-        <TextField 
-            id={generateId("TextField")}
+        <GridToolbar 
+            id={generateId("GridToolbar")}
             {...props}
         />
     );
