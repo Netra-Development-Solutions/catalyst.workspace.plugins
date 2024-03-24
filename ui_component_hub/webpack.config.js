@@ -85,6 +85,7 @@ module.exports = (_, argv) => ({
         "./icons/ExpandMore": "./src/icons/ExpandMoreIcon",
         "./icons/LocalFireDepartmentSharp": "./src/icons/LocalFireDepartmentSharpIcon",
         "./icons/LockOutlined": "./src/icons/LockOutlinedIcon",
+        "./icons/Translate": "./src/icons/TranslateIcon",
         "./icons/Menu": "./src/icons/MenuIcon",
         "./Link": "./src/Link",
         "./List": "./src/List",
